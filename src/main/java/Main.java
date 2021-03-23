@@ -19,14 +19,16 @@ import java.util.List;
 public class Main {
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 		//Convetr csv -> json
+		String pathCsv = "/Users/greddyd/IdeaProjects/ConvertFormat/src/data.csv";
 		String[] columnMap = {"id", "firstName", "lastName", "country", "age"};
-		List<Employee> listCSV = parseCSV(columnMap, "/Users/greddyd/IdeaProjects/ConvertFormat/src/data.csv");
+		List<Employee> listCSV = parseCSV(columnMap, pathCsv);
 		String jsonCsv = listToJson(listCSV);
 		String resultFileCsv = "data.json";
 		writeString(jsonCsv, resultFileCsv);
 
 		//Convert xml - > json
-		List<Employee> list = parseXML("/Users/greddyd/IdeaProjects/ConvertFormat/src/data.xml");
+		String pathXml = "/Users/greddyd/IdeaProjects/ConvertFormat/src/data.xml";
+		List<Employee> list = parseXML(pathXml);
 		String jsonXml = listToJson(list);
 		String resultFileXml = "data2.json";
 		writeString(jsonXml, resultFileXml);
@@ -50,25 +52,20 @@ public class Main {
 		return null;
 	}
 
-	private static List<Employee> parseXML(String pathFile) throws ParserConfigurationException, IOException, SAXException {
+	public static List<Employee> parseXML(String pathFile) throws ParserConfigurationException, IOException, SAXException {
 		List<Employee> dataXml = new ArrayList<>();
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document doc = builder.parse(new File(pathFile));
 		Node root = doc.getDocumentElement();
-		System.out.println("Корневой элемент: " + root.getNodeName());
+		System.out.println("  Корневой элемент: " + root.getNodeName());
 		NodeList nodeList = root.getChildNodes();
 		for (int i = 0; i < nodeList.getLength(); i++) {
 			Node node = nodeList.item(i);
 			if (node.getNodeType() == Node.ELEMENT_NODE) {
-				System.out.println("Teкyщий элeмeнт: " + node.getNodeName());
+				System.out.println("    Teкyщий элeмeнт: " + node.getNodeName());
 				Element element = (Element) node;
 				NodeList nlEmp = element.getChildNodes();
-//				System.out.println("id: " + nlEmp.item(1).getTextContent() +
-//								"\nfirstName: " + nlEmp.item(3).getTextContent() +
-//								"\nlastName: " + nlEmp.item(5).getTextContent() +
-//								"\ncountry: " + nlEmp.item(7).getTextContent() +
-//								"\nage: " + nlEmp.item(9).getTextContent());
 				Employee jEmp = new Employee(Long.parseLong(nlEmp.item(1).getTextContent()),
 																		nlEmp.item(3).getTextContent(),
 																		nlEmp.item(5).getTextContent(),
