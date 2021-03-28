@@ -19,7 +19,7 @@ import java.util.List;
 public class Main {
 	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException {
 		//Convetr csv -> json
-		String pathCsv = "/Users/greddyd/IdeaProjects/ConvertFormat/src/data.csv";
+		String pathCsv = "./src/test/resources/data.csv";
 		String[] columnMap = {"id", "firstName", "lastName", "country", "age"};
 		List<Employee> listCSV = parseCSV(columnMap, pathCsv);
 		String jsonCsv = listToJson(listCSV);
@@ -27,7 +27,7 @@ public class Main {
 		writeString(jsonCsv, resultFileCsv);
 
 		//Convert xml - > json
-		String pathXml = "/Users/greddyd/IdeaProjects/ConvertFormat/src/data.xml";
+		String pathXml = "./src/test/resources/data.xml";
 		List<Employee> list = parseXML(pathXml);
 		String jsonXml = listToJson(list);
 		String resultFileXml = "data2.json";
